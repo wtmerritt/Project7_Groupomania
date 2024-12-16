@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import email from "../assets/email.png";
-import password from "../assets/password.png";
-import user from "../assets/user.png";
+import emailIcon from "../assets/email.png";
+import passwordIcon from "../assets/password.png";
+import userIcon from "../assets/user.png";
 import "../styles/LoginSignup.css";
 
 // Regex Expressions
-const regUser = /^[A-Za-z- .]{4,25}$/;
-const regEmail = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})$/;
-const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+// const regUser = /^[A-Za-z- .]{4,25}$/;
+// const regEmail = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})$/;
+// const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
+// User Signup or Login process
 const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // console.log("Userinfo: " + fullName + " " + email + " " + password);
 
   return (
     <div className="container">
       <div className="header">
-        <div className="text">{action}</div>
+        <div className="name">{action}</div>
         <div className="underline"></div>
         <div>
           <br />
@@ -27,17 +32,35 @@ const LoginSignup = () => {
           <div></div>
         ) : (
           <div className="input">
-            <img src={user} alt="" />
-            <input type="text" placeholder="Fullname" />
+            <img src={userIcon} alt="" />
+            <input
+              type="text"
+              placeholder="Fullname"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
           </div>
         )}
         <div className="input">
-          <img src={email} alt="" />
-          <input type="email" placeholder="Email" />
+          <img src={emailIcon} alt="" />
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="input">
-          <img src={password} alt="" />
-          <input type="password" placeholder="Password" />
+          <img src={passwordIcon} alt="" />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
       </div>
       <div className="submit-container">
@@ -45,6 +68,7 @@ const LoginSignup = () => {
           className={action === "Login" ? "submit gray" : "submit"}
           onClick={() => {
             setAction("Sign Up");
+            postData("Signup");
           }}
         >
           Sign Up
@@ -53,6 +77,7 @@ const LoginSignup = () => {
           className={action === "Sign Up" ? "submit gray" : "submit"}
           onClick={() => {
             setAction("Login");
+            postData("Login");
           }}
         >
           Login
@@ -60,6 +85,59 @@ const LoginSignup = () => {
       </div>
     </div>
   );
+
+  // OnSubmit of the Signup or Login button
+  function postData(msg) {
+    // e.preventDefault();
+    const userInfo = { fullName, email, password };
+    console.log(userInfo);
+
+    if (msg === "Signup") {
+      fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userInfo.email,
+          password: userInfo.password,
+          fullname: userInfo.fullName,
+        }),
+      })
+        .then((res) => {
+          if (res.ok && email !== "") {
+            alert("User Signup successfully");
+          } else if (email !== "") {
+            alert("Something is wrong with the user Signup");
+          }
+          
+          return res.json();
+        })
+        .then((data) => console.log(data))
+        .catch((error) => console.log("ERROR"));
+    } else if (msg === "Login") {
+      fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userInfo.email,
+          password: userInfo.password,
+        }),
+      })
+        .then((res) => {
+          if (res.ok && email !== '') {
+            alert("User Login successfully");
+          } else if (email !== '') {
+            alert("Something is wrong with the user Login");
+          }
+          return res.json();
+        })        
+        .then((data) => console.log(data))
+        .catch((error) => console.log("ERROR"));
+    }
+  }
 };
 
 export default LoginSignup;
