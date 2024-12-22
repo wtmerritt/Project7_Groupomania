@@ -1,7 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const User = require("../models/user");
-// const { Error } = require("mongoose");
 const { User } = require("../models/");
 require("dotenv").config();
 
@@ -44,7 +42,7 @@ exports.login = (req, res, next) => {
             });
           }
           const token = jwt.sign(
-            { userId: user._id },
+            { userId: user.id },
             process.env.SECRET_TOKEN,
             {
               expiresIn: "24h",
@@ -52,7 +50,7 @@ exports.login = (req, res, next) => {
           );
 
           res.status(200).json({
-            userId: user._id,
+            userId: user.id,
             token: token,
           });
         })

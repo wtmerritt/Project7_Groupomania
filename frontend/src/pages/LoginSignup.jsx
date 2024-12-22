@@ -110,10 +110,12 @@ const LoginSignup = () => {
           } else if (email !== "") {
             alert("Something is wrong with the user Signup");
           }
-          
           return res.json();
         })
-        .then((data) => console.log(data))
+        .then((data) => {
+          // TODO Set msg to Login to automatically log in the user
+          console.log(data);
+        })
         .catch((error) => console.log("ERROR"));
     } else if (msg === "Login") {
       fetch("http://localhost:3000/api/auth/login", {
@@ -127,14 +129,18 @@ const LoginSignup = () => {
         }),
       })
         .then((res) => {
-          if (res.ok && email !== '') {
+          if (res.ok && email !== "") {
             alert("User Login successfully");
-          } else if (email !== '') {
+          } else if (email !== "") {
             alert("Something is wrong with the user Login");
           }
           return res.json();
-        })        
-        .then((data) => console.log(data))
+        })
+        .then((data) => {
+          // TODO Add userinfo to Local Storage
+          // TODO Use React Router to send user to the Home Page
+          console.log(data);
+        })
         .catch((error) => console.log("ERROR"));
     }
   }

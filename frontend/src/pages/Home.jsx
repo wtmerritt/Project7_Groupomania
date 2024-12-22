@@ -8,10 +8,16 @@ function Home() {
       <div className="home">
         <ul>
           <li>
-            <a href="http://localhost:4200/signup">SIGN UP</a>
+            <a href="http://localhost:4200/create">Create Blog</a>
           </li>
           <li>
-            <a href="http://localhost:4200/login">LOGIN</a>
+            <a href="http://localhost:4200/blog">View Blogs</a>
+          </li>
+          <li>
+            <a href="http://localhost:4200/signup">Sign Up</a>
+          </li>
+          <li>
+            <a href="http://localhost:4200/login">Login</a>
           </li>
         </ul>
       </div>

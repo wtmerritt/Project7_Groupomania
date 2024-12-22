@@ -20,7 +20,7 @@ if (config.use_env_variable) {
 }
 
 if (env === 'development') {
-  sequelize.sync({ force: true });
+  sequelize.sync({ alter: true });
 }
 
 
