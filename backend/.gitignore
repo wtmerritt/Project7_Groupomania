@@ -1,4 +1,4 @@
 .env
 node_modules
-images/*
-!images/.gitkeep
+media/*
+!media/.gitkeep

@@ -11,12 +11,25 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+  
   Blogs.init(
     {
-      title: DataTypes.STRING,
-      body: DataTypes.STRING,
-      author: DataTypes.STRING,
-      file: DataTypes.STRING
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        required: true,
+      },
+      body: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        required: true,
+      },
+      author: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        required: true,
+      },
+      mediaUrl: DataTypes.STRING,
     },
     {
       sequelize,

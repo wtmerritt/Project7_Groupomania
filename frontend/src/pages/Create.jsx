@@ -1,34 +1,68 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Navbar from "./Navbar";
+import "../styles/index.css";
 
 function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [author, setAuthor] = useState("");
   const [file, setFile] = useState("");
+  const [uploadedFileURL, setUploadedFileURL] = useState(null);
   const navigate = useNavigate();
+  const url = "http://localhost:3000/api/blogs";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const blog = { title, body, author, file };
-   
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
 
-    // Post New Blog
-    fetch("http://localhost:3000/api/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blog),
-    }).then(() => {
-      console.log("New Blog added ..." + blog);
-      navigate("/");
-    });
+    const blog = { title, body, author };
+    // TODO Check if the an file exist to determine if FormData is needed or just JSON ...
+
+    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+    console.log("localStorage loginToken = " + loginInfo.token);
+    const data = new FormData();
+
+    if (file !== null) {
+      data.append("blog", JSON.stringify(blog));
+      data.append("media", file);
+
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${loginInfo.token}`,
+        },
+      };
+      axios
+        .post(url, data, config)
+        .then((res) => {
+          console.log(res.data);
+          setUploadedFileURL(res.data.files);
+          navigate("/blogs");
+        })
+        .catch((error) => {
+          console.error("Error uploading file: ", error);
+          // setError(error);
+        });
+    } else {
+      data.append("blog", JSON.stringify(blog));
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${loginInfo.token}`,
+        },
+      };
+      axios
+        .post(url, data, config)
+        .then((res) => {
+          console.log(res.data);
+          navigate("/blogs");
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    }
   };
 
   return (
@@ -57,14 +91,19 @@ function Create() {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
           />
-          <label>Blog image:</label>
+          <label>File Upload:</label>
           <input
             type="file"
-            name="file"
-            onChange={(e) => setFile(e.target.files[0])}
+            value={file}
+            onChange={(e) => setFile(e.target.value)}
+            // name="file"
+            // onChange={(e) => setFile(e.target.files[0])}
           />
           <button>Add Blog</button>
         </form>
+        {uploadedFileURL && (
+          <img src={uploadedFileURL} alt="Uploaded content" />
+        )}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import LoginSignup from "./LoginSignup";
 import Create from './Create';
-import Blog from "./Blog";
+import Blogs from "./Blog";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blogs" element={<Blogs />} />
           <Route path="/create" element={<Create />} />
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/signup" element={<LoginSignup />} />

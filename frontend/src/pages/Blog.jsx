@@ -1,14 +1,21 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import LoginSignup from "./LoginSignup";
 
-function Blog() {
-  const navigate = useNavigate();
+function Blogs() {
+  // const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
+  
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));  
+  console.log("localStorage loginToken = " + loginInfo.token);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/blog")
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${loginInfo.token}`,
+    };
+    fetch("http://localhost:3000/api/blogs", { headers })
       .then((res) => res.json())
       .then((data) => setBlogs(data))
       .catch((err) => console.log(err));
@@ -30,4 +37,4 @@ function Blog() {
     </>
   );
 }
-export default Blog;
+export default Blogs;

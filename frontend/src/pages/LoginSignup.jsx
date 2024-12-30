@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import emailIcon from "../assets/email.png";
 import passwordIcon from "../assets/password.png";
 import userIcon from "../assets/user.png";
 import "../styles/LoginSignup.css";
+import { useNavigate } from "react-router-dom";
 
 // Regex Expressions
 // const regUser = /^[A-Za-z- .]{4,25}$/;
@@ -15,16 +16,36 @@ const LoginSignup = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // console.log("Userinfo: " + fullName + " " + email + " " + password);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  // const [loginInfo, setloginInfo] = useState("");
+  
+
+  // Clear out LocalStorage
+  localStorage.clear();
+
+  // useEffect(() => {
+  //   console.log(data);
+  //   const data = localStorage.getItem("email");
+  //   if (data) {
+  //     setEmail(JSON.parse(data));
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("email", JSON.stringify(email));
+  //   // localStorage.setItem('password', JSON.stringify(password));
+  // });
 
   return (
     <div className="container">
+      {error && <div>{error}</div>}
       <div className="header">
         <div className="name">{action}</div>
         <div className="underline"></div>
         <div>
           <br />
-          <a href="http://localhost:4200/">HOME</a>
+          {/* <a href="http://localhost:4200/">HOME</a> */}
         </div>
       </div>
       <div className="inputs">
@@ -35,7 +56,7 @@ const LoginSignup = () => {
             <img src={userIcon} alt="" />
             <input
               type="text"
-              placeholder="Fullname"
+              placeholder="FullName"
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -64,6 +85,7 @@ const LoginSignup = () => {
         </div>
       </div>
       <div className="submit-container">
+        {/* {error && <div>{error}</div>} */}
         <div
           className={action === "Login" ? "submit gray" : "submit"}
           onClick={() => {
@@ -73,6 +95,7 @@ const LoginSignup = () => {
         >
           Sign Up
         </div>
+        {/* {error && <div>{error}</div>} */}
         <div
           className={action === "Sign Up" ? "submit gray" : "submit"}
           onClick={() => {
@@ -101,22 +124,31 @@ const LoginSignup = () => {
         body: JSON.stringify({
           email: userInfo.email,
           password: userInfo.password,
-          fullname: userInfo.fullName,
+          fullName: userInfo.fullName,
         }),
       })
         .then((res) => {
-          if (res.ok && email !== "") {
-            alert("User Signup successfully");
-          } else if (email !== "") {
-            alert("Something is wrong with the user Signup");
+          if (fullName === "" && email === "" && password === "") {
+            setError(null);
+          } else if (res.ok && email !== "") {
+            setError(null);
+            navigate("/login");
+            postData("Login");
+          } else {
+            throw new Error(
+              "Could not complete the Signup process. Please try again."
+            );
           }
+
           return res.json();
         })
         .then((data) => {
-          // TODO Set msg to Login to automatically log in the user
           console.log(data);
         })
-        .catch((error) => console.log("ERROR"));
+        .catch((err) => {
+          setError(err.message);
+          // console.log(err.message);
+        });
     } else if (msg === "Login") {
       fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -129,19 +161,35 @@ const LoginSignup = () => {
         }),
       })
         .then((res) => {
-          if (res.ok && email !== "") {
-            alert("User Login successfully");
-          } else if (email !== "") {
-            alert("Something is wrong with the user Login");
+          if (email === "" || password === "") {
+            setError(null);
+          } else if (res.ok && email !== "") {
+            setError(null);
+            navigate("/blogs");
+          } else {
+            throw new Error(
+              "Incorrect email or password info. Please enter the correct information."
+            );
           }
+
           return res.json();
         })
         .then((data) => {
-          // TODO Add userinfo to Local Storage
-          // TODO Use React Router to send user to the Home Page
-          console.log(data);
+          // console.log("res data = ", data);
+          // // TODO Add userinfo to Local Storage
+          // // TODO Use React Router to send user to the Home Page
+          
+          const token = data.token;
+          
+          localStorage.setItem("token", JSON.stringify(token));
+          localStorage.setItem("loginInfo", JSON.stringify(data));
+          localStorage.setItem("email", JSON.stringify(email));
+          
         })
-        .catch((error) => console.log("ERROR"));
+        .catch((err) => {
+          setError(err.message);
+          // console.log(err.message);
+        });
     }
   }
 };
