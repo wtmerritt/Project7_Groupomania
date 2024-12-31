@@ -22,6 +22,7 @@ function Create() {
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     console.log("localStorage loginToken = " + loginInfo.token);
     const data = new FormData();
+    console.log('file = ' + file);
 
     if (file !== null) {
       data.append("blog", JSON.stringify(blog));
