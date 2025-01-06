@@ -17,14 +17,13 @@ function Create() {
     e.preventDefault();
 
     const blog = { title, body, author };
-    // TODO Check if the an file exist to determine if FormData is needed or just JSON ...
 
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     console.log("localStorage loginToken = " + loginInfo.token);
     const data = new FormData();
-    console.log('file = ' + file);
 
-    if (file !== null) {
+    if (file) {
+      console.log("file = " + file);
       data.append("blog", JSON.stringify(blog));
       data.append("media", file);
 
@@ -37,8 +36,7 @@ function Create() {
       axios
         .post(url, data, config)
         .then((res) => {
-          console.log(res.data);
-          setUploadedFileURL(res.data.files);
+          // setUploadedFileURL(res.data.files);
           navigate("/blogs");
         })
         .catch((error) => {
@@ -46,7 +44,11 @@ function Create() {
           // setError(error);
         });
     } else {
-      data.append("blog", JSON.stringify(blog));
+      const blog = {
+        title,
+        body,
+        author,
+      };
 
       const config = {
         headers: {
@@ -55,7 +57,7 @@ function Create() {
         },
       };
       axios
-        .post(url, data, config)
+        .post(url, blog, config)
         .then((res) => {
           console.log(res.data);
           navigate("/blogs");

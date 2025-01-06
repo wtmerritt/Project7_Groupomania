@@ -47,3 +47,7 @@ text-align: center;
   border-radius: 8px;
   cursor: pointer;
 }
+
+.blog-preview a{
+  text-decoration: none;
+}

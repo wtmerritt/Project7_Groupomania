@@ -19,7 +19,6 @@ const LoginSignup = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   // const [loginInfo, setloginInfo] = useState("");
-  
 
   // Clear out LocalStorage
   localStorage.clear();
@@ -150,46 +149,47 @@ const LoginSignup = () => {
           // console.log(err.message);
         });
     } else if (msg === "Login") {
-      fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userInfo.email,
-          password: userInfo.password,
-        }),
-      })
-        .then((res) => {
-          if (email === "" || password === "") {
-            setError(null);
-          } else if (res.ok && email !== "") {
-            setError(null);
-            navigate("/blogs");
-          } else {
-            throw new Error(
-              "Incorrect email or password info. Please enter the correct information."
-            );
-          }
+      setError(null);
+      if (email && password) {
+        fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: userInfo.email,
+            password: userInfo.password,
+          }),
+        })
+          .then((res) => {
+            if (res.ok && email !== "") {
+              setError(null);
+              // navigate("/blogs");
+            } else {
+              throw new Error(
+                "Incorrect email or password info. Please enter the correct information."
+              );
+            }
 
-          return res.json();
-        })
-        .then((data) => {
-          // console.log("res data = ", data);
-          // // TODO Add userinfo to Local Storage
-          // // TODO Use React Router to send user to the Home Page
-          
-          const token = data.token;
-          
-          localStorage.setItem("token", JSON.stringify(token));
-          localStorage.setItem("loginInfo", JSON.stringify(data));
-          localStorage.setItem("email", JSON.stringify(email));
-          
-        })
-        .catch((err) => {
-          setError(err.message);
-          // console.log(err.message);
-        });
+            return res.json();
+          })
+          .then((data) => {
+            // console.log("res data = ", data);
+            // // TODO Add userinfo to Local Storage
+            // // TODO Use React Router to send user to the Home Page
+
+            // const token = data.token;
+
+            // localStorage.setItem("token", JSON.stringify(token));
+            localStorage.setItem("loginInfo", JSON.stringify(data));
+            localStorage.setItem("email", JSON.stringify(email));
+            navigate("/blogs");
+          })
+          .catch((err) => {
+            setError(err.message);
+            // console.log(err.message);
+          });
+      }
     }
   }
 };
