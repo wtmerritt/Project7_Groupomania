@@ -1,27 +1,19 @@
 // const { blogs } = require("../models");
 const { Console } = require("console");
-const { blog } = require("../models");
-const { Blogs } = require("../models");
+const { blog } = require("../models/");
+const { Blogs } = require("../models/");
 require("dotenv").config();
 const fs = require("fs");
 
 exports.create = (req, res, next) => {
-  if (req.body.media) {
-    console.log("req file data = " + JSON.stringify(req.body.blog));
-    var str = req.body.media;
-    console.log("media req = " + JSON.stringify(req.body.media));
-    var parts = str.split("\\");
-    var right = parts[2];
-    console.log("right = " + right);
-
+  if (req.file) {
     const url = req.protocol + "://" + req.get("host");
     const blog = JSON.parse(req.body.blog);
     const blogs = new Blogs({
       title: blog.title,
       body: blog.body,
-      author: blog.author,
-      // mediaUrl: url + "/media/" + req.file.filename,
-      mediaUrl: url + "/media/" + right,
+      userId: blog.userId,
+      mediaUrl: url + "/media/" + req.file.filename,
     });
     blogs
       .save()
@@ -39,16 +31,12 @@ exports.create = (req, res, next) => {
     console.log("file is empty ");
     console.log("blog = " + JSON.stringify(req.body));
 
-    const blogTitle = JSON.stringify(req.body.title);
-    const blogBody = JSON.stringify(req.body.body);
-    const blogAuthor = JSON.stringify(req.body.author);
-    
-    const url = req.protocol + "://" + req.get("host");
+    const blog = req.body;
 
     const blogs = new Blogs({
-      title: blogTitle,
-      body: blogBody,
-      author: blogAuthor,
+      title: blog.title,
+      body: blog.body,
+      userId: blog.userId,
       mediaUrl: "",
     });
     blogs
@@ -69,11 +57,11 @@ exports.create = (req, res, next) => {
 exports.getOneBlog = (req, res, next) => {
   console.log("Inside function getOne Blog");
   Blogs.findOne({
-    id: req.params.id,
+    where: { id: req.params.id },
   })
     .then((blog) => {
       console.log("id req = " + req.params.id);
-      
+
       res.status(200).json(blog);
     })
     .catch((error) => {
@@ -82,7 +70,6 @@ exports.getOneBlog = (req, res, next) => {
       });
     });
 };
-
 
 exports.getAllBlogs = (req, res, next) => {
   console.log("Inside function get All Blogs");
@@ -98,4 +85,23 @@ exports.getAllBlogs = (req, res, next) => {
     });
 };
 
-
+exports.deleteBlog = (req, res, next) => {
+  Blogs.findOne({
+    where: { id: req.params.id },
+  }).then((blog) => {
+    const filename = blog.mediaUrl.split("/media/")[1];
+    fs.unlink("media/" + filename, () => {
+      Blogs.deleteOne({ _id: req.params.id })
+        .then(() => {
+          res.status(200).json({
+            message: "Deleted Blog!",
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            error: error,
+          });
+        });
+    });
+  });
+};

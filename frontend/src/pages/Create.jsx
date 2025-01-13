@@ -7,23 +7,23 @@ import "../styles/index.css";
 function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [author, setAuthor] = useState("");
-  const [file, setFile] = useState("");
-  const [uploadedFileURL, setUploadedFileURL] = useState(null);
+  // const [userId, setUserId] = useState("");
+  const [file, setFile] = useState(null);
+
   const navigate = useNavigate();
   const url = "http://localhost:3000/api/blogs";
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const blog = { title, body, author };
-
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+    const userId = loginInfo.userId;
+    const blog = { title, body, userId };
     console.log("localStorage loginToken = " + loginInfo.token);
     const data = new FormData();
 
     if (file) {
-      console.log("file = " + file);
+      // console.log("media file = " + file);
       data.append("blog", JSON.stringify(blog));
       data.append("media", file);
 
@@ -44,10 +44,11 @@ function Create() {
           // setError(error);
         });
     } else {
+      console.log("media is not found");
       const blog = {
         title,
         body,
-        author,
+        userId,
       };
 
       const config = {
@@ -87,26 +88,15 @@ function Create() {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           ></textarea>
-          <label>Blog author:</label>
-          <input
-            type="text"
-            required
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+
           <label>File Upload:</label>
           <input
             type="file"
-            value={file}
-            onChange={(e) => setFile(e.target.value)}
-            // name="file"
-            // onChange={(e) => setFile(e.target.files[0])}
+            name="file"
+            onChange={(e) => setFile(e.target.files[0])}
           />
           <button>Add Blog</button>
         </form>
-        {uploadedFileURL && (
-          <img src={uploadedFileURL} alt="Uploaded content" />
-        )}
       </div>
     </>
   );
