@@ -1,7 +1,5 @@
-// const { blogs } = require("../models");
 const { Console } = require("console");
-const { blog } = require("../models/");
-const { Blogs } = require("../models/");
+const { Blogs, User } = require("../models/");
 require("dotenv").config();
 const fs = require("fs");
 
@@ -12,7 +10,7 @@ exports.create = (req, res, next) => {
     const blogs = new Blogs({
       title: blog.title,
       body: blog.body,
-      userId: blog.userId,
+      UserId: blog.userId,
       mediaUrl: url + "/media/" + req.file.filename,
     });
     blogs
@@ -28,15 +26,11 @@ exports.create = (req, res, next) => {
         });
       });
   } else {
-    console.log("file is empty ");
-    console.log("blog = " + JSON.stringify(req.body));
-
     const blog = req.body;
-
     const blogs = new Blogs({
       title: blog.title,
       body: blog.body,
-      userId: blog.userId,
+      UserId: blog.userId,
       mediaUrl: "",
     });
     blogs
@@ -55,12 +49,17 @@ exports.create = (req, res, next) => {
 };
 
 exports.getOneBlog = (req, res, next) => {
-  console.log("Inside function getOne Blog");
+  // console.log("Inside function getOne Blog");
   Blogs.findOne({
     where: { id: req.params.id },
   })
+
+    // Blogs.findOne({
+    //   include: [{ model: User, attributes: ["fullName"] }],
+    // })
+
     .then((blog) => {
-      console.log("id req = " + req.params.id);
+      // console.log("id req = " + req.params.id);
 
       res.status(200).json(blog);
     })
@@ -72,8 +71,8 @@ exports.getOneBlog = (req, res, next) => {
 };
 
 exports.getAllBlogs = (req, res, next) => {
-  console.log("Inside function get All Blogs");
-  Blogs.findAll()
+  // console.log("Inside function get All Blogs");
+  Blogs.findAll({ include: [{ model: User, attributes: ["fullName"] }] })
     .then((blog) => {
       res.status(200).json(blog);
     })
@@ -85,23 +84,40 @@ exports.getAllBlogs = (req, res, next) => {
     });
 };
 
-exports.deleteBlog = (req, res, next) => {
+exports.read = (req, res, next) => {
+  console.log("Inside Read function ...");
+  const userId = req.body.userId;
+  console.log("Inside Blog Read ");
+
   Blogs.findOne({
     where: { id: req.params.id },
-  }).then((blog) => {
-    const filename = blog.mediaUrl.split("/media/")[1];
-    fs.unlink("media/" + filename, () => {
-      Blogs.deleteOne({ _id: req.params.id })
-        .then(() => {
-          res.status(200).json({
-            message: "Deleted Blog!",
+  })
+    .then((blog) => {
+      // TODO Check if user read the post else add Read array
+      // console.log("blog.read = " + blog.read);
+      // if (blog.read === null) {
+        blog.read = [...blog.read, userId];
+        blog
+          .save()
+          .then(() => {
+            res.status(201).json({
+              message: "Read Updated successfully",
+            });
+          })
+          .catch((error) => {
+            res.status(500).json({
+              error: error,
+            });
           });
-        })
-        .catch((error) => {
-          res.status(400).json({
-            error: error,
-          });
-        });
+      // } 
+      // else {
+      //   console.log("Blog is already been read ...");
+      // }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error,
+      });
+      console.log("No Read made ...", error);
     });
-  });
 };

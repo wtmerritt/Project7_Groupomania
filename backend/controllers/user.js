@@ -66,3 +66,22 @@ exports.login = (req, res, next) => {
       });
     });
 };
+
+exports.deleteAccount = (req, res, next) => {
+  console.log("PK id = " + req.params.id);
+  User.destroy({
+    where: { id: req.params.id },
+  })
+    .then(function (deletedRecord) {
+      if (deletedRecord === 1) {       
+        res.status(200).json({ message: "Account Deleted successfully" });
+      } else {
+        res.status(404).json({ message: "record not found" });
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error,
+      });
+    });
+};

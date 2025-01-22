@@ -9,11 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Blogs.belongsTo(models.User);
-      // models.User.hasMany(Blogs);
+      Blogs.belongsTo(models.User);
     }
   }
-  
+
   Blogs.init(
     {
       title: {
@@ -26,14 +25,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         required: true,
       },
-      userId: {
-        type: DataTypes.INTEGER,
+      read: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
-        required: true,
-      },
+        defaultValue: [],
+      },      
+
       mediaUrl: DataTypes.STRING,
     },
-    
+
     {
       sequelize,
       modelName: "Blogs",

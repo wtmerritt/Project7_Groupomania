@@ -7,8 +7,9 @@ import "../styles/index.css";
 function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  // const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [file, setFile] = useState(null);
+  const [read, setRead] = useState(0);
 
   const navigate = useNavigate();
   const url = "http://localhost:3000/api/blogs";
@@ -18,12 +19,12 @@ function Create() {
 
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     const userId = loginInfo.userId;
-    const blog = { title, body, userId };
-    console.log("localStorage loginToken = " + loginInfo.token);
+    const blog = { title, body, userId, read };
+
+    // console.log("localStorage loginToken = " + loginInfo.token);
     const data = new FormData();
 
     if (file) {
-      // console.log("media file = " + file);
       data.append("blog", JSON.stringify(blog));
       data.append("media", file);
 
@@ -36,12 +37,10 @@ function Create() {
       axios
         .post(url, data, config)
         .then((res) => {
-          // setUploadedFileURL(res.data.files);
           navigate("/blogs");
         })
         .catch((error) => {
           console.error("Error uploading file: ", error);
-          // setError(error);
         });
     } else {
       console.log("media is not found");
@@ -49,6 +48,7 @@ function Create() {
         title,
         body,
         userId,
+        read,
       };
 
       const config = {
@@ -61,6 +61,7 @@ function Create() {
         .post(url, blog, config)
         .then((res) => {
           console.log(res.data);
+
           navigate("/blogs");
         })
         .catch((error) => {

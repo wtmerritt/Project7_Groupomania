@@ -10,13 +10,7 @@ function Home() {
       {loggedIn ? <h1>Login Page</h1> : <Navigate to="/login" />}
       <Banner />
       <div className="home">
-        <ul>
-          {/* <li>
-            <a href="http://localhost:4200/create">Create Blog</a>
-          </li>
-          <li>
-            <a href="http://localhost:4200/blog">View Blogs</a>
-          </li> */}
+        <ul>         
           <li>
             <a href="http://localhost:4200/signup">Sign Up</a>
           </li>

@@ -4,23 +4,20 @@ import LoginSignup from "./LoginSignup";
 import Create from './Create';
 import Blogs from "./Blogs";
 import BlogDetails from "./BlogDetails";
+import DeleteAccount from "./DeleteAccount";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
-        {/* <Link to="/home">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link> */}
-
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetails />} />
           <Route path="/create" element={<Create />} />
           <Route path="/login" element={<LoginSignup />} />
-          <Route path="/signup" element={<LoginSignup />} />
+          <Route path="/signup" element={<LoginSignup />} />       
+          <Route path="/deleteaccount" element={<DeleteAccount />} />
         </Routes>
       </div>
     </Router>

@@ -1,3 +1,11 @@
+@media (min-width: 992px) {
+  .footer h2 {
+    display: flex;
+    align-items: start;
+    margin-left: 0px;
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -13,7 +21,6 @@ code {
 }
 
 /* For New Blog */
-
 .create {
   max-width: 400px;
   margin: 0 auto;
@@ -29,7 +36,7 @@ code {
 
 .create h2 {
   font-size: 25px;
-  color: #f1356d;
+  color: #f22900;
   margin: 30px;
 }
 
@@ -44,7 +51,36 @@ code {
 }
 
 .create button {
-  background: #f1356d;
+  background: #f22900;
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Account Page */
+.account-details h2 {
+  background-color: lightgrey;
+  text-align: center;
+  font-size: 25px;
+  color: #f22900;
+  padding: 25px;
+}
+
+.account-details article {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.account-details div {
+  margin: 20px 50px;
+}
+
+.account-details button {
+  background: #f22900;
+  font-size: medium;
+  font-weight: bold;
   color: #fff;
   border: 0;
   padding: 10px;
@@ -53,13 +89,16 @@ code {
 }
 
 /* Blog View Page */
-.blog-view h2 {
-  background-color: lightgrey;
-  text-align: center;
-  font-size: 25px;
-  color: #f1356d;
-  padding: 20px;
-  margin-bottom: 10px;
+/* Desktop & Tablet Computer Screen */
+@media all and (min-width: 768px) {
+  .blog-view h2 {
+    background-color: lightgrey;
+    text-align: center;
+    font-size: 25px;
+    color: #f22900;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
 }
 
 .blog-preview a {
@@ -73,7 +112,7 @@ code {
   background-color: lightgrey;
   text-align: center;
   font-size: 25px;
-  color: #f1356d;
+  color: #f22900;
   padding: 25px;
 }
 
@@ -87,7 +126,75 @@ code {
 }
 
 .blog-details button {
-  background: red;
+  background: #f22900;
+  font-size: medium;
+  font-weight: bold;
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* For New Profile */
+.createProfile {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.createProfile label {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  display: block;
+}
+
+.createProfile h2 {
+  font-size: 25px;
+  color: #f22900;
+  margin: 30px;
+}
+
+.createProfile input,
+.createProfile textarea,
+.createProfile select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  display: block;
+}
+
+.createProfile button {
+  background: #f22900;
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Profile Page */
+.profile-details h2 {
+  background-color: lightgrey;
+  text-align: center;
+  font-size: 25px;
+  color: #f22900;
+  padding: 25px;
+}
+
+.profile-details article {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.profile-details div {
+  margin: 20px 50px;
+}
+
+.profile-details button {
+  background: #f22900;
   font-size: medium;
   font-weight: bold;
   color: #fff;

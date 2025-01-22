@@ -7,14 +7,13 @@ import LoginSignup from "./LoginSignup";
 function Blogs() {
   // const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState([]);
-
-  // const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+  
   const url = "http://localhost:3000/api/blogs";
 
   useEffect(() => {
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     const token = loginInfo.token;
-    // console.log("token = " + token);
+    
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,

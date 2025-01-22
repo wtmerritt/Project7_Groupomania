@@ -7,30 +7,29 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  /* max-width: 600px; */
+
   margin: 0 aut;
   border-bottom: 1px solid #f2f2f2;
 }
 
 .navbar h1 {
-  color: #f1356d;
+  color: #f22900;
 }
 
 .navbar .links {
   margin-left: auto;
-  font-weight: bold;
 }
 
 .navbar a {
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
-  color: blue;
+  color: black;
   font-size: 15px;
 }
 
 .navbar a:hover {
-  color: red;
+  color: #fcd7d6;
 }
 
 .content {

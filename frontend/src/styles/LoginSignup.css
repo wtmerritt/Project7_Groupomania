@@ -6,7 +6,7 @@
   background: #fff;
   padding-bottom: 30px;
   font-size: 40px;
-  color:slateblue;
+  color: #f22900;
 }
 
 .header {
@@ -27,7 +27,8 @@
 .underline {
   width: 61px;
   height: 6px;
-  background: blue;
+
+  background: #f22900;
   border-radius: 9px;
 }
 
@@ -75,7 +76,7 @@
   width: 220px;
   height: 59px;
   color: #fff;
-  background: rgb(93, 60, 124);
+  background: #f22900;
   border-radius: 50px;
   font-size: 19px;
   font-weight: 700;

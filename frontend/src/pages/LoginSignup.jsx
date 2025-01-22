@@ -17,25 +17,11 @@ const LoginSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  // const [loginInfo, setloginInfo] = useState("");
+  const navigate = useNavigate();  
 
   // Clear out LocalStorage
   localStorage.clear();
-
-  // useEffect(() => {
-  //   console.log(data);
-  //   const data = localStorage.getItem("email");
-  //   if (data) {
-  //     setEmail(JSON.parse(data));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("email", JSON.stringify(email));
-  //   // localStorage.setItem('password', JSON.stringify(password));
-  // });
-
+  
   return (
     <div className="container">
       {error && <div>{error}</div>}
@@ -43,8 +29,7 @@ const LoginSignup = () => {
         <div className="name">{action}</div>
         <div className="underline"></div>
         <div>
-          <br />
-          {/* <a href="http://localhost:4200/">HOME</a> */}
+          <br />       
         </div>
       </div>
       <div className="inputs">
@@ -83,8 +68,7 @@ const LoginSignup = () => {
           />
         </div>
       </div>
-      <div className="submit-container">
-        {/* {error && <div>{error}</div>} */}
+      <div className="submit-container">      
         <div
           className={action === "Login" ? "submit gray" : "submit"}
           onClick={() => {
@@ -93,8 +77,7 @@ const LoginSignup = () => {
           }}
         >
           Sign Up
-        </div>
-        {/* {error && <div>{error}</div>} */}
+        </div>       
         <div
           className={action === "Sign Up" ? "submit gray" : "submit"}
           onClick={() => {
@@ -145,8 +128,7 @@ const LoginSignup = () => {
           console.log(data);
         })
         .catch((err) => {
-          setError(err.message);
-          // console.log(err.message);
+          setError(err.message);          
         });
     } else if (msg === "Login") {
       setError(null);
@@ -163,8 +145,7 @@ const LoginSignup = () => {
         })
           .then((res) => {
             if (res.ok && email !== "") {
-              setError(null);
-              // navigate("/blogs");
+              setError(null);             
             } else {
               throw new Error(
                 "Incorrect email or password info. Please enter the correct information."
@@ -173,21 +154,13 @@ const LoginSignup = () => {
 
             return res.json();
           })
-          .then((data) => {
-            // console.log("res data = ", data);
-            // // TODO Add userinfo to Local Storage
-            // // TODO Use React Router to send user to the Home Page
-
-            // const token = data.token;
-
-            // localStorage.setItem("token", JSON.stringify(token));
+          .then((data) => {            
             localStorage.setItem("loginInfo", JSON.stringify(data));
             localStorage.setItem("email", JSON.stringify(email));
             navigate("/blogs");
           })
           .catch((err) => {
-            setError(err.message);
-            // console.log(err.message);
+            setError(err.message);            
           });
       }
     }
