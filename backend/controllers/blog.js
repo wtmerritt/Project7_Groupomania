@@ -2,6 +2,8 @@ const { Console } = require("console");
 const { Blogs, User } = require("../models/");
 require("dotenv").config();
 const fs = require("fs");
+const blog = require("../models/blog");
+const emptyArray = {};
 
 exports.create = (req, res, next) => {
   if (req.file) {
@@ -49,18 +51,12 @@ exports.create = (req, res, next) => {
 };
 
 exports.getOneBlog = (req, res, next) => {
-  // console.log("Inside function getOne Blog");
+  
   Blogs.findOne({
     where: { id: req.params.id },
   })
 
-    // Blogs.findOne({
-    //   include: [{ model: User, attributes: ["fullName"] }],
-    // })
-
     .then((blog) => {
-      // console.log("id req = " + req.params.id);
-
       res.status(200).json(blog);
     })
     .catch((error) => {
@@ -71,7 +67,7 @@ exports.getOneBlog = (req, res, next) => {
 };
 
 exports.getAllBlogs = (req, res, next) => {
-  // console.log("Inside function get All Blogs");
+  
   Blogs.findAll({ include: [{ model: User, attributes: ["fullName"] }] })
     .then((blog) => {
       res.status(200).json(blog);
@@ -85,17 +81,14 @@ exports.getAllBlogs = (req, res, next) => {
 };
 
 exports.read = (req, res, next) => {
-  console.log("Inside Read function ...");
+ 
   const userId = req.body.userId;
-  console.log("Inside Blog Read ");
 
   Blogs.findOne({
     where: { id: req.params.id },
   })
     .then((blog) => {
-      // TODO Check if user read the post else add Read array
-      // console.log("blog.read = " + blog.read);
-      // if (blog.read === null) {
+      if (blog.read[0] !== 1) {
         blog.read = [...blog.read, userId];
         blog
           .save()
@@ -109,10 +102,9 @@ exports.read = (req, res, next) => {
               error: error,
             });
           });
-      // } 
-      // else {
-      //   console.log("Blog is already been read ...");
-      // }
+      } else {
+        console.log("Blog is already been read ...");
+      }
     })
     .catch((error) => {
       res.status(400).json({

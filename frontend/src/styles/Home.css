@@ -1,6 +1,7 @@
-
-.home{   
-    color: rgb(169, 169, 189);
-    font-size: 28px;
-    font-weight: 600;
+.home {
+  color: rgb(169, 169, 189);
+  font-size: 28px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  margin: auto;
 }

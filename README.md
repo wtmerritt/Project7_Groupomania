@@ -1,4 +1,4 @@
-Add instructions for starting the Frontend & Backend servers for Project 7 Application.
+Project 7 - Instructions for starting the Frontend & Backend servers.
 
 1) Start backend server:
     a) Change to backend folder.

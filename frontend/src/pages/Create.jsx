@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import "../styles/index.css";
+import Banner from "../components/banner";
+import "../styles/LoginSignup.css";
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -19,9 +21,7 @@ function Create() {
 
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     const userId = loginInfo.userId;
-    const blog = { title, body, userId, read };
-
-    // console.log("localStorage loginToken = " + loginInfo.token);
+    const blog = { title, body, userId, read };    
     const data = new FormData();
 
     if (file) {
@@ -72,6 +72,7 @@ function Create() {
 
   return (
     <>
+      <Banner />
       <Navbar />
       <div className="create">
         <h2>Add a New Blog</h2>

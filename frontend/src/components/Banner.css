@@ -1,7 +1,16 @@
 
 .jh-banner {
-    color: rgb(209, 21, 21);
+    color: rgb(209, 21, 21);    
     text-align: right;
-    padding: 12px;
+    padding: 10px;
+    margin-top: -5px;
     border-bottom: solid 3px black;
+}
+
+.jh-title {
+    /* color: rgb(209, 21, 21);     */
+    text-align: right;
+    padding: 10px;
+    font-size: 30px;
+    /* border-bottom: solid 3px black; */
 }

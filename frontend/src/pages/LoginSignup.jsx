@@ -1,14 +1,11 @@
 import { useState } from "react";
+import Banner from "../components/banner";
+import "../styles/LoginSignup.css";
 import emailIcon from "../assets/email.png";
 import passwordIcon from "../assets/password.png";
 import userIcon from "../assets/user.png";
-import "../styles/LoginSignup.css";
-import { useNavigate } from "react-router-dom";
 
-// Regex Expressions
-// const regUser = /^[A-Za-z- .]{4,25}$/;
-// const regEmail = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})$/;
-// const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+import { useNavigate } from "react-router-dom";
 
 // User Signup or Login process
 const LoginSignup = () => {
@@ -17,19 +14,20 @@ const LoginSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   // Clear out LocalStorage
   localStorage.clear();
-  
+
   return (
     <div className="container">
+      <Banner />
       {error && <div>{error}</div>}
       <div className="header">
         <div className="name">{action}</div>
         <div className="underline"></div>
         <div>
-          <br />       
+          <br />
         </div>
       </div>
       <div className="inputs">
@@ -68,7 +66,7 @@ const LoginSignup = () => {
           />
         </div>
       </div>
-      <div className="submit-container">      
+      <div className="submit-container">
         <div
           className={action === "Login" ? "submit gray" : "submit"}
           onClick={() => {
@@ -77,7 +75,7 @@ const LoginSignup = () => {
           }}
         >
           Sign Up
-        </div>       
+        </div>
         <div
           className={action === "Sign Up" ? "submit gray" : "submit"}
           onClick={() => {
@@ -93,7 +91,6 @@ const LoginSignup = () => {
 
   // OnSubmit of the Signup or Login button
   function postData(msg) {
-    // e.preventDefault();
     const userInfo = { fullName, email, password };
     console.log(userInfo);
 
@@ -128,7 +125,7 @@ const LoginSignup = () => {
           console.log(data);
         })
         .catch((err) => {
-          setError(err.message);          
+          setError(err.message);
         });
     } else if (msg === "Login") {
       setError(null);
@@ -145,7 +142,7 @@ const LoginSignup = () => {
         })
           .then((res) => {
             if (res.ok && email !== "") {
-              setError(null);             
+              setError(null);
             } else {
               throw new Error(
                 "Incorrect email or password info. Please enter the correct information."
@@ -154,13 +151,13 @@ const LoginSignup = () => {
 
             return res.json();
           })
-          .then((data) => {            
+          .then((data) => {
             localStorage.setItem("loginInfo", JSON.stringify(data));
             localStorage.setItem("email", JSON.stringify(email));
             navigate("/blogs");
           })
           .catch((err) => {
-            setError(err.message);            
+            setError(err.message);
           });
       }
     }

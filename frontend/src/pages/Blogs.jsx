@@ -3,17 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../styles/index.css";
 import LoginSignup from "./LoginSignup";
+import Banner from "../components/banner";
+import "../styles/LoginSignup.css";
 
 function Blogs() {
-  // const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState([]);
-  
+
   const url = "http://localhost:3000/api/blogs";
 
   useEffect(() => {
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     const token = loginInfo.token;
-    
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
@@ -26,6 +27,7 @@ function Blogs() {
 
   return (
     <>
+      <Banner />
       <Navbar />
       <div className="blog-view">
         <h2>View the Blogs</h2>

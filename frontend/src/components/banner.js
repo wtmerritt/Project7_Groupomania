@@ -5,7 +5,7 @@ import "../components/Banner.css";
 
 
 function Banner() {
-    const title = "Groupomania Home Page";
+    const title = "Groupomania Website";
   return (
     <div className="jh-banner">
         <img src={logo} alt='Main Page' className="jh-logo" />
