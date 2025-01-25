@@ -7,18 +7,17 @@ import Banner from "../components/banner";
 import "../styles/LoginSignup.css";
 
 function Blogs() {
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+  const token = loginInfo.token;
   const [blogPosts, setBlogPosts] = useState([]);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+  };
 
   const url = "http://localhost:3000/api/blogs";
 
-  useEffect(() => {
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-    const token = loginInfo.token;
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    };
+  useEffect(() => {    
     fetch(url, { headers })
       .then((res) => res.json())
       .then((data) => setBlogPosts(data))

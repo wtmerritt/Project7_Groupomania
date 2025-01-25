@@ -25,8 +25,16 @@ exports.signup = (req, res, next) => {
   });
 };
 
+// const user = await User.findOne({
+//   where: { lastName: "Doe" },
+// });
+//  Blogs.findOne({
+//    where: { id: req.params.id },
+//  });
+
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  User.findOne({ where: { email: req.body.email } })
+
     .then((user) => {
       if (!user) {
         return res.status(401).json({
@@ -73,7 +81,7 @@ exports.deleteAccount = (req, res, next) => {
     where: { id: req.params.id },
   })
     .then(function (deletedRecord) {
-      if (deletedRecord === 1) {       
+      if (deletedRecord === 1) {
         res.status(200).json({ message: "Account Deleted successfully" });
       } else {
         res.status(404).json({ message: "record not found" });
