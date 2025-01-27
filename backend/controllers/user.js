@@ -75,8 +75,7 @@ exports.login = (req, res, next) => {
     });
 };
 
-exports.deleteAccount = (req, res, next) => {
-  console.log("PK id = " + req.params.id);
+exports.deleteAccount = (req, res, next) => {  
   User.destroy({
     where: { id: req.params.id },
   })

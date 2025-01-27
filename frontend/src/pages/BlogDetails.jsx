@@ -35,18 +35,15 @@ const BlogDetails = () => {
         const fileExt = data.mediaUrl.split(".").pop();
         if (fileExt === "mp4") {
           setVideoFile(true);
-          console.log("Video fileExt = " + fileExt);
+          // console.log("Video fileExt = " + fileExt);
         } else if (fileExt === "mp3") {
           setAudioFile(true);
-          console.log("Audio fileExt = " + fileExt);
+          // console.log("Audio fileExt = " + fileExt);
         } else if (fileExt === "png") {
           setImageFile(true);
-          console.log("Image fileExt = " + fileExt);
+          // console.log("Image fileExt = " + fileExt);
         }
-        // else if (fileExt === "png") {
-        //   imageFile = true;
-        //   console.log("Image fileExt = " + fileExt);
-        // }
+
       })
       .catch((err) => console.log(err));
 

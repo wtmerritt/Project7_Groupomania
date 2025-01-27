@@ -43,7 +43,7 @@ function Create() {
           console.error("Error uploading file: ", error);
         });
     } else {
-      console.log("media is not found");
+      
       const blog = {
         title,
         body,

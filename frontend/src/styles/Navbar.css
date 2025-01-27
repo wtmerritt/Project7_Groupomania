@@ -1,8 +1,8 @@
 * {
   margin: 0;
   font-family: "Courier New", Courier, monospace;
-  color: #333;
 }
+
 .navbar {
   padding: 20px;
   display: flex;
@@ -23,7 +23,8 @@
 .navbar a {
   margin-left: 16px;
   text-decoration: none;
-  padding: 6px;
+
+  padding: 40px 15px 0 15px;
   color: black;
   font-size: 15px;
 }
@@ -37,3 +38,46 @@
   margin: 40px auto;
   padding: 20px;
 }
+
+/* Desktop & Tablet Computer Screen */
+@media all and (min-width: 768px) {
+  nav ul li a {
+    text-decoration: none;
+    color: black;
+    padding: 40px 15px 0 15px;
+    margin-top: 0;
+  }
+} /* End of Desktop & Tablet Screen */
+
+/* Mobile Screen */
+@media all and (max-width: 768px) {
+  .navbar {
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .navbar .links {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar a {
+    margin-left: 16px;
+    text-decoration: none;
+    padding: 40px 15px 0 15px;
+    color: #f22900;
+    font-size: 15px;
+  }
+
+  .navbar a:hover {
+    color: black;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    padding: 40px 15px 0 15px;
+    margin-top: 0;
+  }
+} /* End of Mobile Screen */

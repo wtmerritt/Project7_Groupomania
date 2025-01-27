@@ -103,7 +103,9 @@ exports.read = (req, res, next) => {
             });
           });
       } else {
-        console.log("Blog is already been read ...");
+        // console.log("Blog is already been read ...");
+        res.status(304).json({
+          message: "Blog is already been read"})
       }
     })
     .catch((error) => {

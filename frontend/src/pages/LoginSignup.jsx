@@ -92,7 +92,7 @@ const LoginSignup = () => {
   // OnSubmit of the Signup or Login button
   function postData(msg) {
     const userInfo = { fullName, email, password };
-    console.log(userInfo);
+    // console.log(userInfo);
 
     if (msg === "Signup") {
       fetch("http://localhost:3000/api/auth/signup", {
