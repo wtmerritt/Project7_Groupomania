@@ -102,8 +102,7 @@ exports.read = (req, res, next) => {
               error: error,
             });
           });
-      } else {
-        // console.log("Blog is already been read ...");
+      } else {        
         res.status(304).json({
           message: "Blog is already been read"})
       }

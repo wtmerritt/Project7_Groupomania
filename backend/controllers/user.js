@@ -25,13 +25,6 @@ exports.signup = (req, res, next) => {
   });
 };
 
-// const user = await User.findOne({
-//   where: { lastName: "Doe" },
-// });
-//  Blogs.findOne({
-//    where: { id: req.params.id },
-//  });
-
 exports.login = (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })
 
@@ -75,7 +68,7 @@ exports.login = (req, res, next) => {
     });
 };
 
-exports.deleteAccount = (req, res, next) => {  
+exports.deleteAccount = (req, res, next) => {
   User.destroy({
     where: { id: req.params.id },
   })

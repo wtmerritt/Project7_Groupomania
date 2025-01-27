@@ -35,6 +35,7 @@ const LoginSignup = () => {
           <div></div>
         ) : (
           <div className="input">
+            {/* <label for="fullname">FullName</label> */}
             <img src={userIcon} alt="" />
             <input
               type="text"
@@ -45,9 +46,12 @@ const LoginSignup = () => {
             />
           </div>
         )}
+
         <div className="input">
+          {/* <label for="email">Email</label> */}
           <img src={emailIcon} alt="" />
           <input
+            id="email"
             type="email"
             placeholder="Email"
             required
@@ -56,6 +60,7 @@ const LoginSignup = () => {
           />
         </div>
         <div className="input">
+          {/* <label for="password">Password</label> */}
           <img src={passwordIcon} alt="" />
           <input
             type="password"
@@ -92,7 +97,6 @@ const LoginSignup = () => {
   // OnSubmit of the Signup or Login button
   function postData(msg) {
     const userInfo = { fullName, email, password };
-    // console.log(userInfo);
 
     if (msg === "Signup") {
       fetch("http://localhost:3000/api/auth/signup", {

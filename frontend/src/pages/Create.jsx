@@ -59,9 +59,7 @@ function Create() {
       };
       axios
         .post(url, blog, config)
-        .then((res) => {
-          console.log(res.data);
-
+        .then((res) => {         
           navigate("/blogs");
         })
         .catch((error) => {
